@@ -2,7 +2,7 @@
 """Convert DiKa's Meta catalogue CSV (dikastore.ro, Romanian) into a Google Merchant Center TSV feed.
 
 Shipping per dikastore.ro/ro/terms/delivery-ro: Fan Courier, 25 RON under 500 RON, free from 500 RON,
-delivery 2-6 business days.
+delivery 2-6 business days (set transit time in Merchant Center shipping settings).
 """
 import csv, sys, urllib.request, io
 
@@ -63,8 +63,8 @@ def main():
             "custom_label_1": clean(r.get("custom_label_1")),
             "custom_label_2": clean(r.get("custom_label_2")),
             "custom_label_3": clean(r.get("internal_label")),
-            # country:region:service:price:min_handling:max_handling:min_transit:max_transit
-            "shipping": f"RO::Fan Courier:{ship:.2f} RON:0:0:2:6",
+            # country:region:service:price
+            "shipping": f"RO::Fan Courier:{ship:.2f} RON",
         })
 
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
